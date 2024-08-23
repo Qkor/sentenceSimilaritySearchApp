@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rag/managers/file_manager.dart';
 import 'package:rag/managers/vector_database_manager.dart';
 
 class HomePage extends StatefulWidget{
@@ -35,6 +36,12 @@ class _HomePageState extends State<HomePage> {
                     });
                   },
                   child: const Text("Search")
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                        String? text = await FileManager.loadTextFile();
+                    },
+                    child: const Text("Select file")
                 ),
                 const SizedBox(height: 30),
                 for(final answer in answers) ... {
