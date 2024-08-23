@@ -18,6 +18,17 @@ class VectorDatabaseManager{
     _store.close();
   }
 
+  static clearDatabase(){
+    _box.removeAll();
+  }
+
+  static chunkAndPut(String text){
+    List<String> chunks = text.split('.');
+    for(final chunk in chunks){
+      put(chunk);
+    }
+  }
+
   static put(String text){
     _box.put(Paragraph(embedding: EmbeddingsManager.encode(text), text: text));
   }
