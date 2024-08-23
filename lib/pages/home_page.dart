@@ -53,9 +53,9 @@ class _HomePageState extends State<HomePage> {
                         String? text = await FileManager.loadTextFile();
                         if(text != null){
                           VectorDatabaseManager.chunkAndPut(text);
-                        }
-                        if(context.mounted){
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("File content loaded"), backgroundColor: Colors.green));
+                          if(context.mounted){
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("File content loaded"), backgroundColor: Colors.green));
+                          }
                         }
                       },
                       child: const Row(children: [
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                       VectorDatabaseManager.clearDatabase();
                       if(context.mounted){
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Database cleared"), backgroundColor: Colors.green));
-                      };
+                      }
                     },
                       child: const Row(children: [
                         Icon(Icons.clear_outlined),
