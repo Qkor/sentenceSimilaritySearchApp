@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rag/pages/home_page.dart';
 import 'package:rag/pages/loading_page.dart';
-
 import 'managers/embeddings_manager.dart';
+import 'managers/vector_database_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,10 +28,12 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
     EmbeddingsManager.release();
+    VectorDatabaseManager.close();
   }
 
   initializeModel() async{
     await EmbeddingsManager.initModel();
+    await VectorDatabaseManager.init();
     setState(() {appReady = true;});
   }
 
