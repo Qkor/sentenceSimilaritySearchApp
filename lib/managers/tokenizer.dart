@@ -15,6 +15,6 @@ class Tokenizer{
 
   List<int> encode(String s){
     final tokens = s.split(' ');
-    return tokens.map((token) => vocab!["Ġ$token"] ?? vocab![token] ?? vocab!['[UNK]']!).toList();
+    return tokens.map((token) => vocab![token] ?? vocab!['[UNK]']!).toList();
   }
 }
