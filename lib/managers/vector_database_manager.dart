@@ -18,7 +18,12 @@ class VectorDatabaseManager{
     _store.close();
   }
 
-  put(String text){
+  static put(String text){
     _box.put(Paragraph(embedding: EmbeddingsManager.encode(text), text: text));
+  }
+
+  static query(String query){
+    final queryEmbedding = EmbeddingsManager.encode(query);
+    return _box.query(Paragraph_.embedding.nearestNeighborsF32(queryEmbedding, 5)).build().findWithScores();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rag/managers/embeddings_manager.dart';
+import 'package:rag/managers/vector_database_manager.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage> {
   final inputController = TextEditingController();
-  List<double> embedding = [];
+  List<String> answers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +26,23 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: (){
+                    final results = VectorDatabaseManager.query(inputController.text);
                     setState(() {
-                      embedding = EmbeddingsManager.encode(inputController.text);
+                      answers = [];
+                      for(final result in results){
+                        answers.add(result.object.text);
+                      }
                     });
                   },
-                  child: const Text("Generate sentence embedding")
+                  child: const Text("Search")
                 ),
                 const SizedBox(height: 30),
-                Text(embedding.toString())
+                for(final answer in answers) ... {
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(answer, textAlign: TextAlign.justify),
+                  )
+                }
               ],
             ),
           ),
