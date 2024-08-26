@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rag/managers/file_manager.dart';
+// import 'package:rag/managers/file_manager.dart';
 import 'package:rag/managers/vector_database_manager.dart';
 
 class HomePage extends StatefulWidget{
@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextButton(
@@ -69,29 +70,29 @@ class _HomePageState extends State<HomePage> {
                       ])
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: TextButton(
-                      onPressed: () async {
-                        String? text = await FileManager.loadTextFile();
-                        if(text != null){
-                          VectorDatabaseManager.chunkAndPut(text);
-                          if(context.mounted){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("File content loaded"),
-                                backgroundColor: Colors.green
-                              )
-                            );
-                          }
-                        }
-                      },
-                      child: const Row(children: [
-                        Icon(Icons.file_open),
-                        Text('Load sentences from txt file to vector database')
-                      ])
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(10),
+                //   child: TextButton(
+                //       onPressed: () async {
+                //         String? text = await FileManager.loadTextFile();
+                //         if(text != null){
+                //           VectorDatabaseManager.chunkAndPut(text);
+                //           if(context.mounted){
+                //             ScaffoldMessenger.of(context).showSnackBar(
+                //               const SnackBar(
+                //                 content: Text("File content loaded"),
+                //                 backgroundColor: Colors.green
+                //               )
+                //             );
+                //           }
+                //         }
+                //       },
+                //       child: const Row(children: [
+                //         Icon(Icons.file_open),
+                //         Text('Load sentences from txt file to vector database')
+                //       ])
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextButton(
