@@ -56,7 +56,7 @@ class EmbeddingsManager {
   }
 
   static List<double> encode(String text) {
-    final tokens = tokenizer.encode("<s> $text </s>");
+    final tokens = tokenizer.encode(text);
     final attentionMask = List.filled(tokens.length, 1);
     final wordEmbeddings = _inference(tokens, attentionMask);
     return _meanPooling(wordEmbeddings, attentionMask);

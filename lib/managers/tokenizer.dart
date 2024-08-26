@@ -14,6 +14,7 @@ class Tokenizer{
   }
 
   List<int> encode(String s){
+    s = "[CLS] $s [SEP]";
     final tokens = s.split(' ');
     return tokens.map((token) => vocab![token] ?? vocab!['[UNK]']!).toList();
   }
