@@ -47,20 +47,48 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10,40,10,10),
+                  padding: const EdgeInsets.all(10),
+                  child: TextButton(
+                      onPressed: () async {
+                        if(inputController.text.isNotEmpty){
+                          VectorDatabaseManager.put(inputController.text);
+                          inputController.text = '';
+                          if(context.mounted){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Text added"),
+                                backgroundColor: Colors.green
+                              )
+                            );
+                          }
+                        }
+                      },
+                      child: const Row(children: [
+                        Icon(Icons.add),
+                        Text('Add text to vector database')
+                      ])
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
                   child: TextButton(
                       onPressed: () async {
                         String? text = await FileManager.loadTextFile();
                         if(text != null){
                           VectorDatabaseManager.chunkAndPut(text);
                           if(context.mounted){
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("File content loaded"), backgroundColor: Colors.green));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("File content loaded"),
+                                backgroundColor: Colors.green
+                              )
+                            );
                           }
                         }
                       },
                       child: const Row(children: [
                         Icon(Icons.file_open),
-                        Text('Load vector database from txt file')
+                        Text('Load sentences from txt file to vector database')
                       ])
                   ),
                 ),
@@ -69,8 +97,16 @@ class _HomePageState extends State<HomePage> {
                   child: TextButton(
                     onPressed: () {
                       VectorDatabaseManager.clearDatabase();
+                      setState(() {
+                        answers = [];
+                      });
                       if(context.mounted){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Database cleared"), backgroundColor: Colors.green));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Database cleared"),
+                            backgroundColor: Colors.green
+                          )
+                        );
                       }
                     },
                       child: const Row(children: [
@@ -80,11 +116,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                for(final answer in answers) ... {
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(answer, textAlign: TextAlign.justify),
-                  )
+                if(answers.isNotEmpty) ... {
+                  const Text("Most similar sentences from the vector database:", style: TextStyle(fontWeight: FontWeight.bold)),
+                  for(final answer in answers) ... {
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(answer, textAlign: TextAlign.justify),
+                    )
+                  }
                 }
               ],
             ),
